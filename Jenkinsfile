@@ -10,7 +10,6 @@ pipeline {
         }
         stage('Start Application') {
             steps {
-                // Start the server in the background
                 sh 'npm start &'
             }
         }

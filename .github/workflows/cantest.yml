@@ -1,50 +1,50 @@
-# name: Cypress Tests December 2023
+name: Cypress Tests December 2023
 
-# on: push
+on: push
 
-# jobs:
-#   test:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-#       - name: Checkout external repository
-#         uses: actions/checkout@v3
-#         with:
-#           repository: "slawekradzyminski/awesome-localstack"
-#           path: "awesome-localstack"
+      - name: Checkout external repository
+        uses: actions/checkout@v3
+        with:
+          repository: "slawekradzyminski/awesome-localstack"
+          path: "awesome-localstack"
 
-#       - name: Run Docker Compose
-#         run: |
-#           cd awesome-localstack
-#           chmod +x run-docker-compose-ci.sh
-#           ./run-docker-compose-ci.sh
+      - name: Run Docker Compose
+        run: |
+          cd awesome-localstack
+          chmod +x run-docker-compose-ci.sh
+          ./run-docker-compose-ci.sh
 
-#       - name: Install
-#         run: npm install
+      - name: Install
+        run: npm install
 
-#       - name: Setup Chrome 
-#         uses: browser-actions/setup-chrome@v1
+      - name: Setup Chrome 
+        uses: browser-actions/setup-chrome@v1
 
-#       - name: Run Cypress tests
-#         run: npx cypress run --browser chrome
+      - name: Run Cypress tests
+        run: npx cypress run --browser chrome
   
-#       - name: Upload Cypress screenshots
-#         if: failure()
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: cypress-screenshots
-#           path: cypress/screenshots/
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots/
 
-#       - name: Upload Cypress videos
-#         if: failure()
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: cypress-videos
-#           path: cypress/videos/
+      - name: Upload Cypress videos
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos/
