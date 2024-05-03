@@ -15,6 +15,9 @@ jobs:
           repository: 'slawekradzyminski/awesome-localstack'
           path: 'awesome-localstack'
 
+      - name: Install curl
+        run: apt-get update && apt-get install -y curl
+
       - name: Run Docker Compose
         run: |
           cd awesome-localstack
