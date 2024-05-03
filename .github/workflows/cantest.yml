@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: cypress/browsers:node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
-      options: --user 1001
+      options: --user root  # Changed to root for installation purposes
     steps:
       - name: Checkout external repository
         uses: actions/checkout@v3
@@ -16,7 +16,14 @@ jobs:
           path: 'awesome-localstack'
 
       - name: Install curl
-        run: apt-get update && apt-get install -y curl
+        run: |
+          apt-get update
+          apt-get install -y curl
+
+      - name: Cleanup duplicate APT sources
+        run: |
+          sed -i '/microsoft-edge-stable.list/d' /etc/apt/sources.list.d/microsoft-edge.list
+          apt-get update
 
       - name: Run Docker Compose
         run: |
