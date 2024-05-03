@@ -3,32 +3,22 @@ name: Cypress Tests December 2023
 on: push
 
 jobs:
-  chrome-tests-node-18:
+  test:
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: docker:dind
-        options: --privileged
-        ports:
-          - 2375:2375
-    container:
-      image: cypress/browsers:node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
-      options: --user root
-      env:
-        DOCKER_HOST: tcp://docker:2375
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Checkout external repository
         uses: actions/checkout@v3
         with:
-          repository: 'slawekradzyminski/awesome-localstack'
-          path: 'awesome-localstack'
-
-      - name: Install curl and Docker Compose
-        run: |
-          apt-get update
-          apt-get install -y curl
-          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
+          repository: "slawekradzyminski/awesome-localstack"
+          path: "awesome-localstack"
 
       - name: Run Docker Compose
         run: |
@@ -36,17 +26,8 @@ jobs:
           chmod +x run-docker-compose.sh
           ./run-docker-compose.sh
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Install 
+        run: npm install
 
-      - name: Cypress install
-        uses: cypress-io/github-action@v4
-        with:
-          runTests: false
-      - run: npm install
-
-      - name: "Chrome Tests"
-        uses: cypress-io/github-action@v4
-        with:
-          browser: chrome
-          spec: cypress/e2e/*
+      - name: Run Cypress tests
+        run: npx cypress run
