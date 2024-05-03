@@ -36,7 +36,9 @@ pipeline {
         }
         stage('Upload Artifacts on Failure') {
             when {
-                failure()
+                expression {
+                    currentBuild.currentResult == 'FAILURE'
+                }
             }
             steps {
                 archiveArtifacts artifacts: 'cypress/screenshots/**, cypress/videos/**', onlyIfSuccessful: false
