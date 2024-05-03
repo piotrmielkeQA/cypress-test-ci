@@ -26,8 +26,11 @@ jobs:
           chmod +x run-docker-compose.sh
           ./run-docker-compose.sh
 
-      - name: Install 
+      - name: Install
         run: npm install
 
+      - name: Setup Chrome 
+        uses: browser-actions/setup-chrome@v1
+
       - name: Run Cypress tests
-        run: npx cypress run
+        run: npx cypress run --browser chrome
