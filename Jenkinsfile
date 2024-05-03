@@ -8,9 +8,20 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Setup Chrome and Run Cypress tests') {
+        stage('Start Application') {
             steps {
-                sh 'npx cypress run --spec "cypress/e2e/isolation/*"'
+                // Start the server in the background
+                sh 'npm start &'
+            }
+        }
+        stage('Wait for Application to Start') {
+            steps {
+                sh 'npx wait-on tcp:8081'
+            }
+        }
+        stage('Setup Chrome and Run tests') {
+            steps {
+                sh 'npx cypress run --browser chrome --spec "cypress/e2e/isolation/*"'
             }
         }
         stage('Upload Artifacts on Failure') {
