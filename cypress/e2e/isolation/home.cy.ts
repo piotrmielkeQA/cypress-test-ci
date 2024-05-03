@@ -19,7 +19,6 @@ describe('Home page tests in isolation', () => {
 
     it('should display correct data', () => {
         cy.get('li').should('have.length', users.length)
-        cy.percySnapshot()
         cy.get('li').each(($row, i) => {
             // Wolniejsza implementacja z cięzkim wrapem
             // cy.wrap($row).should('contain.text', `${users[i].firstName} ${users[i].lastName}`)

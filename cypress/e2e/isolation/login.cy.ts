@@ -13,7 +13,6 @@ describe('Login page tests in isolation', () => {
 
     it('clicking on Register button should correctly redirect', () => {
         // when
-        cy.percySnapshot()
         loginPage.clickRegister()
 
         // then
