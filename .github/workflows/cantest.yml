@@ -15,15 +15,12 @@ jobs:
           repository: 'slawekradzyminski/awesome-localstack'
           path: 'awesome-localstack'
 
-      - name: Install curl
+      - name: Install curl and Docker Compose
         run: |
           apt-get update
           apt-get install -y curl
-
-      - name: Cleanup duplicate APT sources
-        run: |
-          sed -i '/microsoft-edge-stable.list/d' /etc/apt/sources.list.d/microsoft-edge.list
-          apt-get update
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
 
       - name: Run Docker Compose
         run: |
