@@ -1,8 +1,28 @@
 /// <reference types="cypress" />
 
-describe('example to-do app', () => {
+import { getRandomUser } from "../generators/userGenerator"
+
+let token;
+let user;
+
+describe('Home page tests', () => {
     beforeEach(() => {
-        cy.login('admin', 'admin')
+        user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password)
+        cy.getCookie('token').then((cookie) => {
+            token = cookie.value
+        })
+    })
+
+    afterEach(() => {
+        cy.request({
+            method: 'DELETE',
+            url: `http://localhost:4001/users/${user.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
     })
 
     it('display at least one user', () => {

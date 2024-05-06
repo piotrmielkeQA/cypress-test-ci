@@ -7,5 +7,10 @@ declare namespace Cypress {
          * @param password string
          */
         login(username: string, password: string): void;
+
+        /**
+         * This function register new user
+         */
+        register(user: object): void;
     }
 }
