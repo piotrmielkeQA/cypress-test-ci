@@ -2,21 +2,7 @@
 
 describe('example to-do app', () => {
     beforeEach(() => {
-        // 1. Request http na logowanie
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signin',
-            body: {
-                username: 'admin',
-                password: 'admin',
-            },
-        }).then((resp) => {
-            // 2a. ustawiamy odpowiedź w localStorage
-            localStorage.setItem('user', JSON.stringify(resp.body))
-            // 2b. ustawiamy token z odpowiedzi w ciastku token
-            cy.setCookie('token', resp.body.token)
-        })
-        cy.visit('http://localhost:8081')
+        cy.login('admin', 'admin')
     })
 
     it('display at least one user', () => {
